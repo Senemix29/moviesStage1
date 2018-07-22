@@ -9,13 +9,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.natanximenes.stage1.Movie;
+import br.com.natanximenes.stage1.domain.Movie;
 
-import static br.com.natanximenes.stage1.Movie.MOVIE_POSTER_PROP;
-import static br.com.natanximenes.stage1.Movie.RELEASE_DATE;
-import static br.com.natanximenes.stage1.Movie.SYNOPSIS_PROP;
-import static br.com.natanximenes.stage1.Movie.TITLE_PROP;
-import static br.com.natanximenes.stage1.Movie.USER_RATING_PROP;
+import static br.com.natanximenes.stage1.domain.Movie.MOVIE_POSTER_PROP;
+import static br.com.natanximenes.stage1.domain.Movie.RELEASE_DATE;
+import static br.com.natanximenes.stage1.domain.Movie.SYNOPSIS_PROP;
+import static br.com.natanximenes.stage1.domain.Movie.TITLE_PROP;
+import static br.com.natanximenes.stage1.domain.Movie.USER_RATING_PROP;
 
 public class MovieJsonUtils {
     private static final String ERROR_PROP = "status_code";

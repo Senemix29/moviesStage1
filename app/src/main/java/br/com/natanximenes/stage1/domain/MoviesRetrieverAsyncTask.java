@@ -1,4 +1,4 @@
-package br.com.natanximenes.stage1;
+package br.com.natanximenes.stage1.domain;
 
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;

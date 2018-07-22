@@ -1,4 +1,4 @@
-package br.com.natanximenes.stage1;
+package br.com.natanximenes.stage1.domain;
 
 public class Movie {
     public static final String TITLE_PROP = "title";

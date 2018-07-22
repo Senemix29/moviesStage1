@@ -1,26 +1,37 @@
-package br.com.natanximenes.stage1;
+package br.com.natanximenes.stage1.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.List;
 
+import br.com.natanximenes.stage1.R;
+import br.com.natanximenes.stage1.domain.Movie;
+import br.com.natanximenes.stage1.domain.MoviesRetrieverAsyncTask;
+
 import static br.com.natanximenes.stage1.utils.NetworkUtils.POPULAR;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesRetrieverAsyncTask
         .OnMoviesRetrievedListener {
     private MoviesRetrieverAsyncTask moviesRetrieverAsyncTask;
+    private RecyclerView recyclerView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        recyclerView = findViewById(R.id.content_movies_recycler_view);
+        toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+
         moviesRetrieverAsyncTask = new MoviesRetrieverAsyncTask(this);
         moviesRetrieverAsyncTask.execute(POPULAR);
     }
