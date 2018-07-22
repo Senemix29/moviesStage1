@@ -22,6 +22,11 @@ public class MoviesRetrieverAsyncTask extends AsyncTask<String, Void, List<Movie
         this.onMoviesRetrievedListener = onMoviesRetrievedListener;
     }
 
+    public void setOnMoviesRetrievedListener(@Nullable OnMoviesRetrievedListener
+                                                     onMoviesRetrievedListener) {
+        this.onMoviesRetrievedListener = onMoviesRetrievedListener;
+    }
+
     @Override
     protected List<Movie> doInBackground(String... params) {
         final URL url = NetworkUtils.buildUrl(params[0]);
@@ -48,6 +53,7 @@ public class MoviesRetrieverAsyncTask extends AsyncTask<String, Void, List<Movie
 
     public interface OnMoviesRetrievedListener {
         void onMoviesRetrieved(@Nullable List<Movie> movies);
+
         void onError();
     }
 

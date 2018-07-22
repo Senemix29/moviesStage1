@@ -24,6 +24,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import static br.com.natanximenes.stage1.BuildConfig.API_KEY;
+
 /**
  * These utilities will be used to communicate with the network.
  */
@@ -38,7 +40,7 @@ public class NetworkUtils {
     public static URL buildUrl(String path) {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(path)
-                .appendQueryParameter(PARAM_API_KEY, "")
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .build();
 
         URL url = null;
