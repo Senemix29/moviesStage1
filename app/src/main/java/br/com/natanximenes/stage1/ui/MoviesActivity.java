@@ -1,5 +1,6 @@
 package br.com.natanximenes.stage1.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import br.com.natanximenes.stage1.R;
 import br.com.natanximenes.stage1.domain.Movie;
 import br.com.natanximenes.stage1.domain.MoviesRetrieverAsyncTask;
 
+import static br.com.natanximenes.stage1.ui.MovieDetailsActivity.MOVIE_KEY;
 import static br.com.natanximenes.stage1.utils.NetworkUtils.POPULAR;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesRetrieverAsyncTask
@@ -89,7 +91,9 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public void onMovieItemClick(int position) {
-
+        Intent intent = new Intent(this, MovieDetailsActivity.class);
+        intent.putExtra(MOVIE_KEY, movies.get(position));
+        startActivity(intent);
     }
 
     private void setupRecyclerView() {

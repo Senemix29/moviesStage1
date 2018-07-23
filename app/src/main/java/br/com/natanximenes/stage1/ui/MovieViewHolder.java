@@ -11,9 +11,9 @@ import com.squareup.picasso.Picasso;
 
 import br.com.natanximenes.stage1.R;
 import br.com.natanximenes.stage1.domain.Movie;
-import br.com.natanximenes.stage1.utils.NetworkUtils;
 
 import static android.support.v7.content.res.AppCompatResources.getDrawable;
+import static br.com.natanximenes.stage1.utils.NetworkUtils.BASE_IMAGE_URL;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder {
     static {
@@ -37,7 +37,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Movie movie) {
-        String path = NetworkUtils.BASE_IMAGE_URL + movie.getMoviePosterUrl();
+        String path = BASE_IMAGE_URL + movie.getMoviePosterUrl();
         Drawable placeholderDrawable = getDrawable(itemView.getContext(),
                 R.drawable.vector_movie_poster);
 

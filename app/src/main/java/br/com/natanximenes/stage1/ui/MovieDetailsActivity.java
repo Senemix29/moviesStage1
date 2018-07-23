@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso;
 import br.com.natanximenes.stage1.R;
 import br.com.natanximenes.stage1.domain.Movie;
 
+import static br.com.natanximenes.stage1.utils.NetworkUtils.BASE_IMAGE_URL;
+
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String MOVIE_KEY = "movie";
     private TextView relaseDateTextView;
@@ -37,8 +39,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
 
         if (movie != null) {
+            String path = BASE_IMAGE_URL + movie.getMoviePosterUrl();
             Picasso.with(this)
-                    .load(movie.getMoviePosterUrl())
+                    .load(path)
                     .placeholder(R.drawable.vector_movie_poster)
                     .into(posterImageView);
 
