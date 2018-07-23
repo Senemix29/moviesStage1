@@ -31,7 +31,7 @@ import static br.com.natanximenes.stage1.BuildConfig.API_KEY;
  */
 public class NetworkUtils {
     private final static String BASE_URL = "https://api.themoviedb.org/3/movie/";
-    public final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
+    public final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w500";
     public static final String POPULAR = "popular";
     public static final String TOP_RATED = "top_rated";
 
