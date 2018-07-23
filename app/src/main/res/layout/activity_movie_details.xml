@@ -18,9 +18,9 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/activity_movie_detail_poster"
-                android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitXY"
                 android:src="@drawable/vector_movie_poster"
                 app:layout_collapseMode="parallax" />
 
