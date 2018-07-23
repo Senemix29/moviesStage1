@@ -1,12 +1,26 @@
 package br.com.natanximenes.stage1.domain;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
     public static final String TITLE_PROP = "title";
     public static final String MOVIE_POSTER_PROP = "poster_path";
     public static final String SYNOPSIS_PROP = "overview";
     public static final String USER_RATING_PROP = "vote_average";
     public static final String RELEASE_DATE = "release_date";
-    
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
     private String title;
     private String moviePosterUrl;
     private String synopsis;
@@ -20,6 +34,37 @@ public class Movie {
         this.synopsis = synopsis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
+    }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        moviePosterUrl = in.readString();
+        synopsis = in.readString();
+        if (in.readByte() == 0) {
+            userRating = null;
+        } else {
+            userRating = in.readDouble();
+        }
+        releaseDate = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(moviePosterUrl);
+        parcel.writeString(synopsis);
+        if (userRating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(userRating);
+        }
+        parcel.writeString(releaseDate);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public String getTitle() {
@@ -46,6 +91,7 @@ public class Movie {
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
+
     public String getReleaseDate() {
         return releaseDate;
     }
