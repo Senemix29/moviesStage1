@@ -8,15 +8,15 @@ public class Movie {
     public static final String RELEASE_DATE = "release_date";
     
     private String title;
-    private String moviePoster;
+    private String moviePosterUrl;
     private String synopsis;
     private Double userRating;
     private String releaseDate;
 
-    public Movie(String title, String moviePoster, String synopsis, Double userRating, String
+    public Movie(String title, String moviePosterUrl, String synopsis, Double userRating, String
             releaseDate) {
         this.title = title;
-        this.moviePoster = moviePoster;
+        this.moviePosterUrl = moviePosterUrl;
         this.synopsis = synopsis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
@@ -31,12 +31,12 @@ public class Movie {
         this.title = title;
     }
 
-    public String getMoviePoster() {
-        return moviePoster;
+    public String getMoviePosterUrl() {
+        return moviePosterUrl;
     }
 
-    public void setMoviePoster(String moviePoster) {
-        this.moviePoster = moviePoster;
+    public void setMoviePosterUrl(String moviePosterUrl) {
+        this.moviePosterUrl = moviePosterUrl;
     }
 
     public String getSynopsis() {
