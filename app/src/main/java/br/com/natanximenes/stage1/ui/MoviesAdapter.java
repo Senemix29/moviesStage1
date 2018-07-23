@@ -19,6 +19,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     public MoviesAdapter(List<Movie> movieList, OnMovieItemClickListener onMovieItemClickListener) {
         this.movieList = movieList;
+        this.onMovieItemClickListener = onMovieItemClickListener;
     }
 
     public void setOnMovieItemClickListener(@Nullable OnMovieItemClickListener
