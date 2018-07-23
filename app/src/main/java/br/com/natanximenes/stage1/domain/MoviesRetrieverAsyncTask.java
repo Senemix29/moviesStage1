@@ -47,7 +47,11 @@ public class MoviesRetrieverAsyncTask extends AsyncTask<String, Void, List<Movie
     @Override
     protected void onPostExecute(List<Movie> movies) {
         if (onMoviesRetrievedListener != null) {
-            onMoviesRetrievedListener.onMoviesRetrieved(movies);
+            if (movies != null) {
+                onMoviesRetrievedListener.onMoviesRetrieved(movies);
+            } else {
+                onMoviesRetrievedListener.onError();
+            }
         }
     }
 

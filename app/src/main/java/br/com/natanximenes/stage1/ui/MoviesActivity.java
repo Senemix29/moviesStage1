@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,8 @@ import br.com.natanximenes.stage1.R;
 import br.com.natanximenes.stage1.domain.Movie;
 import br.com.natanximenes.stage1.domain.MoviesRetrieverAsyncTask;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static br.com.natanximenes.stage1.ui.MovieDetailsActivity.MOVIE_KEY;
 import static br.com.natanximenes.stage1.utils.NetworkUtils.POPULAR;
 
@@ -27,6 +31,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private MoviesAdapter moviesAdapter;
+    private ProgressBar progressBar;
+    private TextView errorTextView;
 
     private ArrayList<Movie> movies;
 
@@ -38,6 +44,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
         recyclerView = findViewById(R.id.content_movies_recycler_view);
         toolbar = findViewById(R.id.toolbar);
+        progressBar = findViewById(R.id.progressBar);
+        errorTextView = findViewById(R.id.content_movies_textview_error);
 
         setSupportActionBar(toolbar);
         setupRecyclerView();
@@ -57,19 +65,14 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_movies, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -79,6 +82,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public void onMoviesRetrieved(@Nullable List<Movie> movies) {
+        recyclerView.setVisibility(VISIBLE);
+        progressBar.setVisibility(GONE);
+        errorTextView.setVisibility(GONE);
+
         this.movies = (ArrayList<Movie>) movies;
         moviesAdapter.setMovieList(movies);
         moviesAdapter.notifyDataSetChanged();
@@ -86,7 +93,9 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public void onError() {
-
+        recyclerView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+        errorTextView.setVisibility(VISIBLE);
     }
 
     @Override
