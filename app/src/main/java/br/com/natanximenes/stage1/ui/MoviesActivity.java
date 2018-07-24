@@ -30,7 +30,8 @@ import static br.com.natanximenes.stage1.utils.NetworkUtils.TOP_RATED;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesRetrieverAsyncTask
         .OnMoviesRetrievedListener, MovieViewHolder.OnMovieItemClickListener, View.OnClickListener {
-    private MoviesRetrieverAsyncTask moviesRetrieverAsyncTask;
+    public static final String MOVIE_LIST = "MOVIE_LIST";
+    public static final String CURRENT_SORT_TYPE = "CURRENT_SORT_TYPE";
 
     private RecyclerView recyclerView;
     private Toolbar toolbar;
@@ -38,8 +39,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     private ProgressBar progressBar;
     private Group errorGroup;
     private AppCompatButton retryButton;
+
     private ArrayList<Movie> movies;
     private String currentSortType = POPULAR;
+    private MoviesRetrieverAsyncTask moviesRetrieverAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,23 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
         setupRecyclerView();
 
+        if (savedInstanceState != null) {
+            final List<Movie> movieList = savedInstanceState.getParcelableArrayList(MOVIE_LIST);
+            currentSortType = savedInstanceState.getString(CURRENT_SORT_TYPE);
+
+            showData();
+            showMovieList(movieList);
+            return;
+        }
+
         retrieveMovies(currentSortType);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(MOVIE_LIST, movies);
+        outState.putString(CURRENT_SORT_TYPE, currentSortType);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -79,7 +98,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         if (id == R.id.menu_movies_sort_by_popularity) {
             currentSortType = POPULAR;
@@ -105,21 +124,15 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public void onMovieItemClick(int position) {
-        Intent intent = new Intent(this, MovieDetailsActivity.class);
+        final Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra(MOVIE_KEY, movies.get(position));
         startActivity(intent);
     }
 
     @Override
     public void onMoviesRetrieved(@Nullable List<Movie> moviesRetrieved) {
-        recyclerView.setVisibility(VISIBLE);
-        progressBar.setVisibility(GONE);
-        errorGroup.setVisibility(GONE);
-
-        movies.clear();
-        movies.addAll(moviesRetrieved);
-        moviesAdapter.setMovieList(moviesRetrieved);
-        moviesAdapter.notifyDataSetChanged();
+        showData();
+        showMovieList(moviesRetrieved);
     }
 
     @Override
@@ -127,9 +140,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                recyclerView.setVisibility(GONE);
-                progressBar.setVisibility(GONE);
-                errorGroup.setVisibility(VISIBLE);
+                showErrorState();
             }
         });
     }
@@ -140,11 +151,37 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         recyclerView.setAdapter(moviesAdapter);
     }
 
-    private void retrieveMovies(String sortType) {
+    private void showData() {
+        recyclerView.setVisibility(VISIBLE);
+        progressBar.setVisibility(GONE);
+        errorGroup.setVisibility(GONE);
+    }
+
+    private void hideData() {
         errorGroup.setVisibility(GONE);
         recyclerView.setVisibility(GONE);
         progressBar.setVisibility(VISIBLE);
+    }
 
+    private void showErrorState(){
+        recyclerView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
+        errorGroup.setVisibility(VISIBLE);
+    }
+
+    public void showMovieList(@Nullable List<Movie> movieList) {
+        movies.clear();
+        movies.addAll(movieList);
+        moviesAdapter.setMovieList(movieList);
+        moviesAdapter.notifyDataSetChanged();
+    }
+
+    private void retrieveMovies(@Nullable String sortType) {
+        hideData();
+
+        if (sortType == null) {
+            sortType = POPULAR;
+        }
         moviesRetrieverAsyncTask = new MoviesRetrieverAsyncTask(this);
         moviesRetrieverAsyncTask.execute(sortType);
     }
