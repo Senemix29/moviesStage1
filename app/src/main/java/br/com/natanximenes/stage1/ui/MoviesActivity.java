@@ -30,15 +30,13 @@ import static br.com.natanximenes.stage1.utils.NetworkUtils.TOP_RATED;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesRetrieverAsyncTask
         .OnMoviesRetrievedListener, MovieViewHolder.OnMovieItemClickListener, View.OnClickListener {
-    public static final String MOVIE_LIST = "MOVIE_LIST";
-    public static final String CURRENT_SORT_TYPE = "CURRENT_SORT_TYPE";
+    private static final String MOVIE_LIST = "MOVIE_LIST";
+    private static final String CURRENT_SORT_TYPE = "CURRENT_SORT_TYPE";
 
     private RecyclerView recyclerView;
-    private Toolbar toolbar;
     private MoviesAdapter moviesAdapter;
     private ProgressBar progressBar;
     private Group errorGroup;
-    private AppCompatButton retryButton;
 
     private ArrayList<Movie> movies;
     private String currentSortType = POPULAR;
@@ -50,11 +48,11 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         setContentView(R.layout.activity_movies);
         movies = new ArrayList<>();
 
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final AppCompatButton retryButton = findViewById(R.id.content_movies_button_retry);
         recyclerView = findViewById(R.id.content_movies_recycler_view);
-        toolbar = findViewById(R.id.toolbar);
         progressBar = findViewById(R.id.content_movies_progress_bar);
         errorGroup = findViewById(R.id.content_movies_group_error);
-        retryButton = findViewById(R.id.content_movies_button_retry);
 
         retryButton.setOnClickListener(this);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -169,7 +167,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         errorGroup.setVisibility(VISIBLE);
     }
 
-    public void showMovieList(@Nullable List<Movie> movieList) {
+    private void showMovieList(@Nullable List<Movie> movieList) {
         movies.clear();
         movies.addAll(movieList);
         moviesAdapter.setMovieList(movieList);

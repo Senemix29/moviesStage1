@@ -16,25 +16,21 @@ import static br.com.natanximenes.stage1.utils.NetworkUtils.BASE_IMAGE_URL;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String MOVIE_KEY = "movie";
-    private TextView titleTextView;
-    private TextView relaseDateTextView;
-    private TextView ratingTextView;
-    private TextView synopsisTextView;
-    private ImageView posterImageView;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-
     private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        relaseDateTextView = findViewById(R.id.content_movie_detail_textview_release_date);
-        titleTextView = findViewById(R.id.content_movie_detail_textview_title);
-        ratingTextView = findViewById(R.id.content_movie_detail_textview_user_rating);
-        synopsisTextView = findViewById(R.id.content_movie_detail_textview_synopsis);
-        posterImageView = findViewById(R.id.activity_movie_detail_poster);
-        collapsingToolbarLayout = findViewById(R.id.activity_movie_detail_collapasing_toolbar);
+        final TextView relaseDateTextView = findViewById(R.id
+                .content_movie_detail_textview_release_date);
+        final TextView titleTextView = findViewById(R.id.content_movie_detail_textview_title);
+        final TextView ratingTextView = findViewById(R.id
+                .content_movie_detail_textview_user_rating);
+        final TextView synopsisTextView = findViewById(R.id.content_movie_detail_textview_synopsis);
+        final ImageView posterImageView = findViewById(R.id.activity_movie_detail_poster);
+        final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id
+                .activity_movie_detail_collapasing_toolbar);
 
         collapsingToolbarLayout.setTitle(getString(R.string.content_movie_detail_title));
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
