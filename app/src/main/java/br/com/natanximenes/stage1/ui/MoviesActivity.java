@@ -104,13 +104,14 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     }
 
     @Override
-    public void onMoviesRetrieved(@Nullable List<Movie> movies) {
+    public void onMoviesRetrieved(@Nullable List<Movie> moviesRetrieved) {
         recyclerView.setVisibility(VISIBLE);
         progressBar.setVisibility(GONE);
         errorGroup.setVisibility(GONE);
 
-        this.movies = (ArrayList<Movie>) movies;
-        moviesAdapter.setMovieList(movies);
+        movies.clear();
+        movies.addAll(moviesRetrieved);
+        moviesAdapter.setMovieList(moviesRetrieved);
         moviesAdapter.notifyDataSetChanged();
     }
 
