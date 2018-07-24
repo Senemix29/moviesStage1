@@ -6,4 +6,5 @@
     <string name="content_movie_detail_user_rating">Rating: %1$s</string>
     <string name="content_movies_error_text">Something wrong happened. Please, try again.</string>
     <string name="content_movie_detail_title">Movie Details</string>
+    <string name="content_movies_button_text">Retry</string>
 </resources>

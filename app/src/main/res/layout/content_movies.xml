@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_movies">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/content_movies_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
@@ -37,4 +37,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/content_movies_button_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/content_movies_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_movies_textview_error" />
+
+    <android.support.constraint.Group
+        android:id="@+id/content_movies_group_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="
+        content_movies_button_retry,
+        content_movies_textview_error " />
 </android.support.constraint.ConstraintLayout>
