@@ -1,5 +1,6 @@
 package br.com.natanximenes.stage1.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import static br.com.natanximenes.stage1.utils.NetworkUtils.BASE_IMAGE_URL;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String MOVIE_KEY = "movie";
+    private TextView titleTextView;
     private TextView relaseDateTextView;
     private TextView ratingTextView;
     private TextView synopsisTextView;
@@ -28,10 +30,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
         relaseDateTextView = findViewById(R.id.content_movie_detail_textview_release_date);
+        titleTextView = findViewById(R.id.content_movie_detail_textview_title);
         ratingTextView = findViewById(R.id.content_movie_detail_textview_user_rating);
         synopsisTextView = findViewById(R.id.content_movie_detail_textview_synopsis);
         posterImageView = findViewById(R.id.activity_movie_detail_poster);
         collapsingToolbarLayout = findViewById(R.id.activity_movie_detail_collapasing_toolbar);
+
+        collapsingToolbarLayout.setTitle(getString(R.string.content_movie_detail_title));
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -45,7 +51,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     .placeholder(R.drawable.vector_movie_poster)
                     .into(posterImageView);
 
-            collapsingToolbarLayout.setTitle(movie.getTitle());
+            titleTextView.setText(movie.getTitle());
             relaseDateTextView.setText(getString(R.string.content_movie_detail_release_date,
                     movie.getReleaseDate()));
             ratingTextView.setText(getString(R.string.content_movie_detail_user_rating,
