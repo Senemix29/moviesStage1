@@ -26,9 +26,6 @@ import java.util.Scanner;
 
 import static br.com.natanximenes.stage1.BuildConfig.API_KEY;
 
-/**
- * These utilities will be used to communicate with the network.
- */
 public class NetworkUtils {
     private final static String BASE_URL = "https://api.themoviedb.org/3/movie/";
     public final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w500";

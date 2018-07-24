@@ -26,6 +26,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static br.com.natanximenes.stage1.ui.MovieDetailsActivity.MOVIE_KEY;
 import static br.com.natanximenes.stage1.utils.NetworkUtils.POPULAR;
+import static br.com.natanximenes.stage1.utils.NetworkUtils.TOP_RATED;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesRetrieverAsyncTask
         .OnMoviesRetrievedListener, MovieViewHolder.OnMovieItemClickListener, View.OnClickListener {
@@ -38,6 +39,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     private Group errorGroup;
     private AppCompatButton retryButton;
     private ArrayList<Movie> movies;
+    private String currentSortType = POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +53,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         errorGroup = findViewById(R.id.content_movies_group_error);
         retryButton = findViewById(R.id.content_movies_button_retry);
 
+        retryButton.setOnClickListener(this);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
         setupRecyclerView();
 
-        retrieveMovies();
+        retrieveMovies(currentSortType);
     }
 
     @Override
@@ -78,7 +81,15 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_movies_sort_by_popularity) {
+            currentSortType = POPULAR;
+            retrieveMovies(POPULAR);
+            return true;
+        }
+
+        if (id == R.id.menu_movies_sort_by_top_rated) {
+            currentSortType = TOP_RATED;
+            retrieveMovies(TOP_RATED);
             return true;
         }
 
@@ -88,11 +99,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.content_movies_button_retry) {
-            errorGroup.setVisibility(GONE);
-            recyclerView.setVisibility(GONE);
-            progressBar.setVisibility(VISIBLE);
-
-            retrieveMovies();
+            retrieveMovies(currentSortType);
         }
     }
 
@@ -117,9 +124,14 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
 
     @Override
     public void onError() {
-        recyclerView.setVisibility(GONE);
-        progressBar.setVisibility(GONE);
-        errorGroup.setVisibility(VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setVisibility(GONE);
+                progressBar.setVisibility(GONE);
+                errorGroup.setVisibility(VISIBLE);
+            }
+        });
     }
 
     private void setupRecyclerView() {
@@ -128,8 +140,12 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         recyclerView.setAdapter(moviesAdapter);
     }
 
-    private void retrieveMovies() {
+    private void retrieveMovies(String sortType) {
+        errorGroup.setVisibility(GONE);
+        recyclerView.setVisibility(GONE);
+        progressBar.setVisibility(VISIBLE);
+
         moviesRetrieverAsyncTask = new MoviesRetrieverAsyncTask(this);
-        moviesRetrieverAsyncTask.execute(POPULAR);
+        moviesRetrieverAsyncTask.execute(sortType);
     }
 }
