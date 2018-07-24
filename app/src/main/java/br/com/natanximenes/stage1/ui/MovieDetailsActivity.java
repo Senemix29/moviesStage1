@@ -38,6 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         collapsingToolbarLayout.setTitle(getString(R.string.content_movie_detail_title));
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

@@ -1,6 +1,7 @@
 package br.com.natanximenes.stage1.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesRetriever
         toolbar = findViewById(R.id.toolbar);
         progressBar = findViewById(R.id.progressBar);
         errorTextView = findViewById(R.id.content_movies_textview_error);
+
+        toolbar.setTitleTextColor(Color.WHITE);
 
         setSupportActionBar(toolbar);
         setupRecyclerView();
